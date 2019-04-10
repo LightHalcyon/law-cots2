@@ -19,6 +19,9 @@ func main() {
 	exchangeName := "1406568753"
 	exchangeType := "direct"
 	ch, err = mq.InitMQ(url, vhost, exchangeName, exchangeType)
+	if err != nil {
+		panic(err)
+	}
 
 	r := gin.Default()
 

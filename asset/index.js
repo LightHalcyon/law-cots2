@@ -1,4 +1,4 @@
-const url = process.env.URL + "/compress";
+// const url = process.env.URL + "/compress";
 // dec2hex :: Integer -> String
 function dec2hex (dec) {
     return ('0' + dec.toString(16)).substr(-2)
@@ -11,14 +11,14 @@ function generateId (len) {
     return Array.from(arr, dec2hex).join('')
 }
 
-const username = process.env.MQUNAME;
-// const username = "1406568753";
+// const username = process.env.MQUNAME;
+const username = "1406568753";
 
-const password = process.env.MQPW;
-// const password = "167664";
+// const password = process.env.MQPW;
+const password = "167664";
 
-const vhost = process.env.MQVHOST;
-// const vhost = "1406568753";
+// const vhost = process.env.MQVHOST;
+const vhost = "1406568753";
 
 const host = window.location.href.replace("http://", '');
 
@@ -33,9 +33,9 @@ form.addEventListener('submit', e => {
 
     id = generateId()
     console.log(id)
-    const url = document.querySelector('input[name="url"]').value;
+    const url1 = document.querySelector('input[name="url"]').value;
     const formData = new FormData();
-    formData.append('url', url);
+    formData.append('url', url1);
     WebSocketTest();
     fetch(url, {
         method: 'POST',
@@ -57,6 +57,7 @@ form.addEventListener('submit', e => {
 });
 
 function WebSocketTest() {
+    console.log(id)
 	if ("WebSocket" in window) {
 		// var ws_stomp_display = new SockJS(process.env.MQURL);
 		var ws_stomp_display = new SockJS('http://152.118.148.103:15674/stomp');

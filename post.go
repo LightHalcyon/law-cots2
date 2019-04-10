@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/reznov53/law-cots2/mq"
@@ -26,11 +27,11 @@ func DlFile(c *gin.Context) {
 		return
 	}
 
-	filepath := "/dl/" + rKey
+	filepath := "dl/" + rKey
 	go func(path string, ch *mq.Channel, rKey string, url string){
 		err := download.File(path, url, ch, rKey)
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 	}(filepath, ch, rKey, url)
 
