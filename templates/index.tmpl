@@ -12,13 +12,14 @@
     <body>
         <div id="div">
             <form id="upload" enctype="multipart/form-data">
-                <input type="file" name="files" id="file-upload"/>
+                <input type="text" name="url" id="url"/>
                 <input type="submit" value="Compress" id="btn-submit">
                 <div id="err"></div>
             </form>
         </div>
         <div id="div">
-            <div id="status"></div>
+            <p id="status"></p>
+            <p id="progress"></p>
         </div>
     </body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>

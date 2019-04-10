@@ -22,7 +22,7 @@ const vhost = process.env.MQVHOST;
 
 const host = window.location.href.replace("http://", '');
 
-const url = 'http://localhost:20608/compress';
+const url = 'http://localhost:20609/dl';
 
 var id = ""
 
@@ -33,9 +33,9 @@ form.addEventListener('submit', e => {
 
     id = generateId()
     console.log(id)
-    const files = document.querySelector('[type=file]').files[0];
+    const url = document.querySelector('input[name="url"]').value;
     const formData = new FormData();
-    formData.append('file', files);
+    formData.append('url', url);
     WebSocketTest();
     fetch(url, {
         method: 'POST',
@@ -46,8 +46,13 @@ form.addEventListener('submit', e => {
     }).then(function(response) {
         return response.json();
     }).then(function(json) {
-        WebSocketTest();
-        console.log(JSON.stringify(json));
+        out = JSON.stringify(json);
+        if (json.Code == 200) {
+            document.getElementById("status").innerHTML = json.Message;
+            WebSocketTest();
+        } else {
+            document.getElementById("status").innerHTML = json.Message;
+        }
     });
 });
 
@@ -67,7 +72,7 @@ function WebSocketTest() {
 		};
 		var on_message_display = function(m) {
 			console.log('message received');
-			document.getElementById("status").innerHTML = m.body;
+			document.getElementById("progress").innerHTML = m.body;
 		};
 		client_display.connect(username, password, on_connect_display, on_error_display, vhost);
 	} else {

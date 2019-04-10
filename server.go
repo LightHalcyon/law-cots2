@@ -2,7 +2,7 @@ package main
 
 import (
 	"net/http"
-	
+
 	"github.com/gin-gonic/gin"
 	"github.com/reznov53/law-cots2/mq"
 )
@@ -29,6 +29,7 @@ func main() {
 			"title": "Upload Page",
 		})
 	})
+	r.POST("/dl", DlFile)
 	
 	r.Run("0.0.0.0:20609")
 }
