@@ -17,4 +17,4 @@ RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -o app
 
 CMD [ "./app" ]
 
-EXPOSE 20605
+EXPOSE 20609
