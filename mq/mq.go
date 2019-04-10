@@ -3,8 +3,8 @@ package mq
 import (
 	"log"
 	"errors"
-	"fmt"
-	"math/rand"
+	// "fmt"
+	// "math/rand"
 
 	"github.com/streadway/amqp"
 )
@@ -24,11 +24,11 @@ func failOnError(err error, msg string) error {
 }
 
 // TokenGenerator generates token for routing key
-func TokenGenerator() string {
-	b := make([]byte, 18)
-	rand.Read(b)
-	return fmt.Sprintf("%x", b)
-}
+// func TokenGenerator() string {
+// 	b := make([]byte, 18)
+// 	rand.Read(b)
+// 	return fmt.Sprintf("%x", b)
+// }
 
 // InitMQ initialize RabbitMQ connection
 func InitMQ(url string, vhost string, excName string, excType string) (*Channel, error) {
