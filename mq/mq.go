@@ -12,6 +12,7 @@ import (
 // Channel returns amqp channel
 type Channel struct {
 	Ch		*amqp.Channel
+	Conn	*amqp.Connection
 	ExcName	string
 }
 
@@ -36,13 +37,13 @@ func InitMQ(url string, vhost string, excName string, excType string) (*Channel,
 	if err1 := failOnError(err, "Failed to connect to RabbitMQ"); err1 != nil {
 		return nil, err1
 	}
-	defer conn.Close()
+	// defer conn.Close()
 
 	ch, err := conn.Channel()
 	if err1 := failOnError(err, "Failed to open a channel"); err1 != nil {
 		return nil, err1
 	}
-	defer ch.Close()
+	// defer ch.Close()
 
 	err = ch.ExchangeDeclare(excName, excType, false, false, false, false, nil)
 	if err1 := failOnError(err, "Failed to declare exchange"); err1 != nil {
@@ -51,6 +52,7 @@ func InitMQ(url string, vhost string, excName string, excType string) (*Channel,
 
 	out := new(Channel)
 	out.Ch = ch
+	out.Conn = conn
 	out.ExcName = excName
 
 	return out, nil

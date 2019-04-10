@@ -46,12 +46,12 @@ form.addEventListener('submit', e => {
     }).then(function(response) {
         return response.json();
     }).then(function(json) {
-        out = JSON.stringify(json);
+        console.log(JSON.stringify(json));
         if (json.Code == 200) {
-            document.getElementById("status").innerHTML = json.Message;
+            document.getElementById("status").innerHTML = json.message;
             WebSocketTest();
         } else {
-            document.getElementById("status").innerHTML = json.Message;
+            document.getElementById("status").innerHTML = json.message;
         }
     });
 });

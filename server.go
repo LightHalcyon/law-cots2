@@ -35,4 +35,6 @@ func main() {
 	r.POST("/dl", DlFile)
 	
 	r.Run("0.0.0.0:20609")
+	ch.Conn.Close()
+	ch.Ch.Close()
 }

@@ -75,6 +75,8 @@ func File(filepath string, url string, channel *mq.Channel, routeKey string) err
 		return err
 	}
 
+	ch.PostMessage("Download Complete", rKey)
+
 	// The progress use the same line so print a new line once it's finished downloading
 	// fmt.Print("\n")
 
