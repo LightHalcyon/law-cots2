@@ -55,7 +55,7 @@ func InitMQ(url string, vhost string) (*Channel, error) {
 
 // ExcDeclare declares exchange
 func (ch *Channel) ExcDeclare(excName string, excType string) error {
-	err =: ch.Ch.ExchangeDeclare(excName, excType, false, false, false, false, nil)
+	err := ch.Ch.ExchangeDeclare(excName, excType, false, false, false, false, nil)
 	if err1 := failOnError(err, "Failed to declare exchange"); err1 != nil {
 		return err1
 	}
