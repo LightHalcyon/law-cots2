@@ -55,7 +55,7 @@ func File(filepath string, url string, channel *mq.Channel, routeKey string) err
 
 	// Create the file, but give it a tmp file extension, this means we won't overwrite a
 	// file until it's downloaded, but we'll remove the tmp extension once downloaded.
-	out, err := os.Create(filepath + ".tmp")
+	out, err := os.Create(filepath)
 	if err != nil {
 		return err
 	}
@@ -80,10 +80,10 @@ func File(filepath string, url string, channel *mq.Channel, routeKey string) err
 	// The progress use the same line so print a new line once it's finished downloading
 	// fmt.Print("\n")
 
-	err = os.Rename(filepath+".tmp", filepath)
-	if err != nil {
-		return err
-	}
+// 	err = os.Rename(filepath+".tmp", filepath)
+// 	if err != nil {
+// 		return err
+// 	}
 
 	ch.PostMessage("Download Finished", rKey)
 
