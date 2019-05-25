@@ -76,6 +76,16 @@ func (ch *Channel) QueueDeclare(queueName string) error {
 	if err1 := failOnError(err, "Failed to declare queue"); err1 != nil {
 		return err1
 	}
+	err = ch.Ch.QueueBind(
+                q.Name, // queue name
+                q.Name,     // routing key
+                ch.ExcName, // exchange
+                false,
+                nil,
+        )
+	if err1 := failOnError(err, "Failed to declare queue"); err1 != nil {
+		return err1
+	}
 	ch.Queue = q
 	return nil
 }
