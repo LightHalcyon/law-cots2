@@ -11,8 +11,9 @@ import (
 
 // Channel returns amqp channel
 type Channel struct {
-	Ch		*amqp.Channel
+	Ch	*amqp.Channel
 	Conn	*amqp.Connection
+	Queue	*amqp.Queue
 	ExcName	string
 }
 
@@ -32,7 +33,7 @@ func failOnError(err error, msg string) error {
 // }
 
 // InitMQ initialize RabbitMQ connection
-func InitMQ(url string, vhost string, excName string, excType string) (*Channel, error) {
+func InitMQ(url string, vhost string) (*Channel, error) {
 	conn, err := amqp.Dial(url + vhost)
 	if err1 := failOnError(err, "Failed to connect to RabbitMQ"); err1 != nil {
 		return nil, err1
@@ -45,17 +46,38 @@ func InitMQ(url string, vhost string, excName string, excType string) (*Channel,
 	}
 	// defer ch.Close()
 
-	err = ch.ExchangeDeclare(excName, excType, false, false, false, false, nil)
-	if err1 := failOnError(err, "Failed to declare exchange"); err1 != nil {
-		return nil, err1
-	}
-
 	out := new(Channel)
 	out.Ch = ch
 	out.Conn = conn
-	out.ExcName = excName
 
 	return out, nil
+}
+
+// ExcDeclare declares exchange
+func (ch *Channel) ExcDeclare(excName string, excType string) error {
+	err = ch.Ch.ExchangeDeclare(excName, excType, false, false, false, false, nil)
+	if err1 := failOnError(err, "Failed to declare exchange"); err1 != nil {
+		return err1
+	}
+	ch.ExcName = excName
+	return nil
+}
+
+// QueueDeclare declares queue
+func (ch *Channel) QueueDeclare(queueName string) error {
+	q, err := ch.Ch.QueueDeclare(
+		queueName, // name
+		false,   // durable
+		false,   // delete when unused
+		false,   // exclusive
+		false,   // no-wait
+		nil,     // arguments
+	)
+	if err1 := failOnError(err, "Failed to declare queue"); err1 != nil {
+		return err1
+	}
+	ch.Queue = q
+	return nil
 }
 
 // PostMessage posts message to RabbitMQ
